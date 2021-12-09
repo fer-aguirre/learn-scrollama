@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Mapa "Fiesta es Resistencia.- DataCrítica</title>
+    <meta name="description" content="Scrollama: Sticky Overlay Example" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      #scrolly {
+        position: relative;
+        background-color: #fffff;
+        padding: 1rem;
+      }
+
+      article {
+        position: relative;
+        padding: 1rem;
+        max-width: 50rem;
+        margin: 0 auto;
+        line-height: 40px;
+      }
+
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        width: 100%;
+        margin: 0;
+        background-color: #8a8a8a;
+        z-index: 0;
+        top: 12.5vh;
+        height: 75vh;
+        /* Center everything inside */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url('images/cactus.jpg');
+        background-size: cover;
+        background-position: center center;
+        border-radius: 10px;
+      }
+
+      .sticky-thing p {
+        font-size: 8rem;
+        font-weight: 900;
+        color: rgb(255, 255, 255);
+      }
+
+      .step {
+        margin: 0 auto 2rem auto;
+        margin-bottom: 15rem;
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step.is-active p {
+        background-color:rgba(48, 48, 47, 0.753);
+        color: #ffffff;
+        border-radius: 10px;
+        text-align: left;
+      }
+
+      .step p {
+        text-align: left;
+        padding: 1rem;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <!-- <nav>
+        <a href="https://github.com/russellgoldenberg/scrollama">scrollama.js</a>
+        <div class="nav__examples">
+          <p>Examples:</p>
+          <a href="basic.html">Basic</a>
+          <a href="progress.html">Progress</a>
+          <a href="sticky-side.html">Sticky Side</a>
+          <a href="sticky-overlay.html">Sticky Overlay</a>
+        </div>
+      </nav> -->
+      <section id="intro">
+        <h1 class="intro__hed">Mapa <i>Fiesta es Resistencia</i></h1>
+        <p class="intro__dek">
+          Una iniciativa para conservar la biodiversidad.
+        </p>
+      </section>
+
+      <section id="scrolly">
+        <div class="sticky-thing">
+          <!-- 
+          something pinned
+          <p>0</p> 
+          -->
+        </div>
+
+        <article>
+          <div class="step" data-step="1" data-color="#007a14" data-image="url('images/cactus2.jpg')">
+            <p>A pesar de que la conversación global sobre crisis climática se ha enfocado en la reducción de emisiones de carbono, la conservación de la biodiversidad ha sido considerada esencial para evitar también pérdida de vidas (incluyendo las humanas, por el deterioro de salud vinculado a pérdida de biodiversidad) desde 1993, año en que se firmó el Convenio de la Biodiversidad de la Organización de las Naciones Unidas.</p>
+          </div>
+          <div class="step" data-step="2" data-color="#119e02" data-image="url('images/landscape.jpg')">
+            <p>La Red Futuros Indígenas, conformada por más de 20 integrantes de naciones indígenas y colectivos de comunicación en México, lanza una invitación a celebrar las fiestas de cuidado de la biodiversidad por medio de la creación de un mapa hecho con “crowdsourcing” y tecnologías abiertas.</p>
+          </div>
+          <div class="step" data-step="3" data-color="#65cd00" data-image="url('images/nature.jpg')">
+            <p>El nombre del mapa es “Fiesta es Resistencia”, una iniciativa de la red Futuros Indígenas a la que Data Crítica se suma allegando herramientas de investigación digital,  En este sitio se lanza una convocatoria para nutrirlo con fiestas y acciones comunitarias, así como un manifiesto en tseltal, mixteco, purépecha, maya peninsular y español.</p>
+          </div>
+          <div class="step" data-step="4" data-color="#aae800" data-image="url('images/cactus.jpg')">
+            <p>En el mapa, cada brote de maíz representa una fiesta o acción en resistencia, y al dar clic pueden observarse su propósito, una fotografía alegórica y la fecha en la que ocurre. Actualmente ha crecido con contribuciones de integrantes de la Red Futuros Indígenas. El mapa continúa nutriéndose a través de un formulario anónimo que integrantes de la red circulan para continuar nutriéndolo.</p>
+          </div>
+
+        </article>
+      </section>
+
+      <section id="outro">
+        
+        <div id="mapa-cuba" class="flourish-embed flourish-map" data-src="visualisation/7665261"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+
+      </section>
+    </main>
+
+    <!-- <div class='debug'></div> -->
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+      // using d3 for convenience
+      var main = document.querySelector("main");
+      var scrolly = main.querySelector("#scrolly");
+      var sticky = scrolly.querySelector(".sticky-thing");
+      var article = scrolly.querySelector("article");
+      var steps = article.querySelectorAll(".step");
+
+      // initialize the scrollama
+      var scroller = scrollama();
+
+      // scrollama event handlers
+      function handleStepEnter(response) {
+        // response = { element, direction, index }
+        var el = response.element;
+
+        // remove is-active from all steps
+        // then add is-active to this step
+        steps.forEach(step => step.classList.remove('is-active'));
+        el.classList.add('is-active');
+
+        // update graphic based on step
+        // sticky.querySelector("p").innerText = el.dataset.step;
+        // sticky.style.backgroundColor = el.dataset.color;
+        sticky.style.backgroundImage = el.dataset.image;
+      }
+
+      function init() {
+        // 2. setup the scroller passing options
+        // 		this will also initialize trigger observations
+        // 3. bind scrollama event handlers (this can be chained like below)
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: 0.5,
+            debug: false
+          })
+          .onStepEnter(handleStepEnter);
+
+        // setup resize event
+        window.addEventListener("resize", scroller.resize);
+      }
+
+      // kick things off
+      init();
+    </script>
+
+    <script>
+      $(document).ready(function(){
+        $('#map').load("mapa.html");     
+      });
+    </script> 
+
+  </body>
+</html>
