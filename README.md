@@ -1,2 +1,2 @@
-# Scrollama
+# Scrollama 🦙
 Scrollytelling examples with scrollama library
