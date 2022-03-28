@@ -1,2 +1,6 @@
-# Folders
+# Git
+.history
+
+# VS Code
+.vs*
 
